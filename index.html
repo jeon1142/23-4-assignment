@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title></title>
+    <style type="text/css">
+    	body{margin: 0;}
+    	@font-face {font-family: 'CookieRun-Regular'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/CookieRun-Regular.woff') format('woff'); font-weight: normal; font-style: normal;}
+        .word { opacity: 1; animation: fadein 1s forwards, fadeout 1s 2s forwards; }
+        #music{position: absolute; left: 50%; top: 100px; transform: translate(-50%, -50%);}
+        #poetText { z-index: 9; position: absolute; left: 50%; top: 200px; font-size: 2rem; text-align: center; transform: translate(-50%, 0%); font-family: 'CookieRun-Regular';}
+		#mike{width: 20%; position: absolute; transform: translate(10%, 70%);}
+		#mike2{width: 20%; position: absolute; transform: translate(380%, 70%);} 
+
+    </style>
+</head>
+<body>
+
+    <audio id="music" src="music.mp3" autoplay controls></audio>
+
+    <div id="poetText"></div>
+    <script type="text/javascript">
+        var poet = "간주중<br>1초라도 안 보이면<br>2렇게 초조한데<br>3초는 어떻게 기다려<br>(이야이야 이야이야)<br>4랑해 널 사랑해<br>5늘은 말할거야<br>6십억 지구에서<br>널 만난건<br>7럭키야<br>사랑해 요기조기 한눈 팔지 말고 나를 봐<br> 좋아해 나를 향해 웃는 미소 매일매일 보여줘<br>8딱팔딱 뛰는 가슴<br>9해죠 오 내마음<br>10년이가도 너를 사랑해<br> 언제나 이맘 변치 않을게";
+        var poetArr = poet.split("<br>");
+        console.log(poetArr);
+
+        var poetText = document.getElementById("poetText");
+        var s = 0;
+
+        function printLine() {
+            if (s < poetArr.length) {
+                var t = document.createElement("div");
+                t.innerHTML = poetArr[s];
+                t.className = "word";
+                s++;
+                poetText.appendChild(t);
+            }
+        }
+
+        var delays = [0, 13000, 3180, 3470, 5060, 1800, 3130, 3490, 3400, 1750, 1690, 6750, 6720, 3470, 3290, 6820];
+        var currentLine = 0;
+
+        function startTimer() {
+            if (currentLine < delays.length) {
+                setTimeout(function () {
+                    printLine();
+                    startTimer();
+                }, delays[currentLine]);
+                currentLine++;
+            }
+        }
+
+        var audio = document.getElementById("music");
+
+        audio.addEventListener("play", function () {
+            // 노래가 재생되면 텍스트 출력 시작
+            startTimer();
+        });
+
+        // 노래 자동 재생
+        audio.autoplay = true;
+    </script>
+    <img src="mike.gif" id="mike">
+    <img src="mike2.gif" id="mike2">
+
+</body>
+</html>
